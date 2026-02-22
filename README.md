@@ -49,6 +49,19 @@ We are designed from the ground up as a **true revenue engine**, not a collectio
 
 ---
 
-## Getting Started
+## Marketing Site
 
-*Technical setup and documentation will be added as the project develops.*
+A product-marketing website lives in `src/app/` with:
+
+- **Landing page** (`/`) — Customer segments, pain points, and how we solve them
+- **Pricing** (`/pricing`) — Individual, Team, and Enterprise plans with a scaling comparison table
+- **Case Studies** (`/case-studies`) — Customer stories and scrolling company logos
+
+### Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
