@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     return NextResponse.json(user);
   } catch (e) {
     if (e instanceof z.ZodError) {
-      return NextResponse.json({ error: e.errors }, { status: 400 });
+      return NextResponse.json({ error: e.issues }, { status: 400 });
     }
     return NextResponse.json({ error: "Sign up failed" }, { status: 500 });
   }

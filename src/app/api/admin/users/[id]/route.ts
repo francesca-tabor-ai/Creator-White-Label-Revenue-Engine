@@ -48,7 +48,7 @@ export async function PUT(
     });
     return NextResponse.json(user);
   } catch (e) {
-    if (e instanceof z.ZodError) return NextResponse.json({ error: e.errors }, { status: 400 });
+    if (e instanceof z.ZodError) return NextResponse.json({ error: e.issues }, { status: 400 });
     return NextResponse.json({ error: "Failed to update user" }, { status: 500 });
   }
 }

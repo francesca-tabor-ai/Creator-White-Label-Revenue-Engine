@@ -33,20 +33,8 @@ async function main() {
   console.log("Created organization:", org.name);
 
   // Creators
-  const creator1 = await prisma.creator.upsert({
-    where: { id: (await prisma.creator.findFirst({ where: { slug: "jane-creator" } }))?.id ?? "create-new" },
-    update: {},
-    create: {
-      organizationId: org.id,
-      name: "Jane Doe",
-      email: "jane@example.com",
-      slug: "jane-creator",
-      bio: "Fitness and wellness creator with 500K followers.",
-    },
-  });
-  // Use a workaround: upsert requires unique where - use findFirst then create or use compound
   const existingCreator1 = await prisma.creator.findUnique({ where: { slug: "jane-creator" } });
-  const creator1Final = existingCreator1 ?? await prisma.creator.create({
+  const creator1 = existingCreator1 ?? await prisma.creator.create({
     data: {
       organizationId: org.id,
       name: "Jane Doe",
