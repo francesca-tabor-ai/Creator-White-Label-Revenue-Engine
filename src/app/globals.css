@@ -8,6 +8,15 @@
   --color-accent: 42 96% 53%;
   --color-surface: 210 20% 98%;
   --color-ink: 215 25% 14%;
+  /* ChatWidget variables */
+  --color-chat-bg: #ffffff;
+  --color-surface-elevated: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-ai-bubble: #f1f5f9;
+  --radius: 12px;
+  --radius-sm: 8px;
 }
 
 body {

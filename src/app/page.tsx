@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogosMarquee } from "@/components/LogosMarquee";
+import { Footer } from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -23,7 +24,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="#"
+              href="/contact"
               className="rounded-xl bg-teal-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-teal-600/25 transition hover:bg-teal-700 hover:shadow-teal-600/30"
             >
               Start free trial
@@ -204,7 +205,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
-              href="#"
+              href="/contact"
               className="rounded-xl bg-teal-500 px-6 py-3.5 font-semibold text-white transition hover:bg-teal-400"
             >
               Get started free
@@ -219,24 +220,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
-          <span className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Creator White Label Revenue Engine
-          </span>
-          <div className="flex gap-6">
-            <Link href="/pricing" className="text-sm text-slate-600 hover:text-teal-600">
-              Pricing
-            </Link>
-            <Link href="/case-studies" className="text-sm text-slate-600 hover:text-teal-600">
-              Case Studies
-            </Link>
-            <Link href="/contact" className="text-sm text-slate-600 hover:text-teal-600">
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

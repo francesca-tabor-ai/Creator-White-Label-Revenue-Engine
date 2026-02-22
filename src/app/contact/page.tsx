@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
 
 const REQUEST_TYPES = [
+  { value: "trial", label: "Start free trial / Demo request" },
+  { value: "sales", label: "Sales inquiry" },
   { value: "support", label: "Customer support request" },
   { value: "bug", label: "Bug report" },
   { value: "general", label: "General inquiry" },
@@ -14,7 +17,7 @@ const EMAIL = "info@francescatabor.com";
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [requestType, setRequestType] = useState<string>("support");
+  const [requestType, setRequestType] = useState<string>("trial");
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,6 +71,7 @@ export default function ContactPage() {
                   onChange={(e) => setName(e.target.value)}
                   className="mt-1 block w-full rounded-lg border border-slate-300 px-4 py-2.5 text-slate-900 shadow-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
                   placeholder="Your name"
+                  autoComplete="name"
                 />
               </div>
 
@@ -86,6 +90,7 @@ export default function ContactPage() {
                   className="mt-1 block w-full rounded-lg border border-slate-300 px-4 py-2.5 text-slate-900 shadow-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
                   placeholder="you@example.com"
                   required
+                  autoComplete="email"
                 />
               </div>
 
@@ -152,24 +157,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-slate-50 px-4 py-8 sm:px-6 lg:px-8 mt-16">
-        <div className="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
-          <span className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Creator White Label Revenue Engine
-          </span>
-          <div className="flex gap-6">
-            <Link href="/" className="text-sm text-slate-600 hover:text-teal-600">
-              Home
-            </Link>
-            <Link href="/pricing" className="text-sm text-slate-600 hover:text-teal-600">
-              Pricing
-            </Link>
-            <Link href="/case-studies" className="text-sm text-slate-600 hover:text-teal-600">
-              Case Studies
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

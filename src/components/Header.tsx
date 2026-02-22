@@ -7,6 +7,8 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/pricing", label: "Pricing" },
   { href: "/case-studies", label: "Case Studies" },
+  { href: "/marketplace", label: "Marketplace" },
+  { href: "/api-docs", label: "API Docs" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -32,7 +34,13 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/pricing"
+            href="/auth/login"
+            className="text-sm font-medium text-slate-600 transition-colors hover:text-teal-600"
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/contact"
             className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
           >
             Get started

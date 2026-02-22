@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
 
 const plans = [
   {
@@ -17,7 +18,7 @@ const plans = [
       "Email support",
     ],
     cta: "Start free trial",
-    ctaHref: "#",
+    ctaHref: "/contact",
     highlighted: false,
   },
   {
@@ -38,7 +39,7 @@ const plans = [
       "Priority support",
     ],
     cta: "Start free trial",
-    ctaHref: "#",
+    ctaHref: "/contact",
     highlighted: true,
   },
   {
@@ -246,33 +247,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
-          <span className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Creator White Label Revenue Engine
-          </span>
-          <div className="flex gap-6">
-            <Link
-              href="/"
-              className="text-sm text-slate-600 hover:text-teal-600"
-            >
-              Home
-            </Link>
-            <Link
-              href="/case-studies"
-              className="text-sm text-slate-600 hover:text-teal-600"
-            >
-              Case Studies
-            </Link>
-            <Link
-              href="/contact"
-              className="text-sm text-slate-600 hover:text-teal-600"
-            >
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

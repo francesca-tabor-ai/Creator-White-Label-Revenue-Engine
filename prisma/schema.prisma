@@ -1,0 +1,199 @@
+// Creator White Label Revenue Engine - PostgreSQL Schema
+// Railway + Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  OPERATOR
+  CREATOR
+}
+
+enum OrganizationPlan {
+  INDIVIDUAL
+  TEAM
+  ENTERPRISE
+}
+
+enum BillingPeriod {
+  MONTHLY
+  YEARLY
+}
+
+enum ProductStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum DigitalProductType {
+  DOWNLOAD
+  LICENSE
+  SUBSCRIPTION
+}
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  emailVerified  DateTime? @map("email_verified")
+  passwordHash   String?   @map("password_hash") // For credentials provider
+  name           String?
+  image          String?
+  role           UserRole  @default(OPERATOR)
+  organizationId String?   @map("organization_id")
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  accounts       Account[]
+  sessions       Session[]
+
+  @@map("users")
+}
+
+// NextAuth adapter - Account model for OAuth (optional)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Organization {
+  id        String             @id @default(cuid())
+  name      String
+  slug      String             @unique
+  plan      OrganizationPlan   @default(INDIVIDUAL)
+  createdAt DateTime           @default(now()) @map("created_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
+  users     User[]
+  creators  Creator[]
+}
+
+model Creator {
+  id             String    @id @default(cuid())
+  organizationId String    @map("organization_id")
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  email          String
+  slug           String     @unique
+  bio            String?   @db.Text
+  avatarUrl      String?   @map("avatar_url")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  courses        Course[]
+  memberships    Membership[]
+  digitalProducts DigitalProduct[]
+  affiliatePrograms AffiliateProgram[]
+  communities    Community[]
+}
+
+model Course {
+  id          String        @id @default(cuid())
+  creatorId   String        @map("creator_id")
+  creator     Creator       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String
+  description String?       @db.Text
+  price       Decimal      @db.Decimal(10, 2)
+  status      ProductStatus @default(DRAFT)
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+  @@unique([creatorId, slug])
+}
+
+model Membership {
+  id            String        @id @default(cuid())
+  creatorId     String        @map("creator_id")
+  creator       Creator       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  name          String
+  slug          String
+  price         Decimal      @db.Decimal(10, 2)
+  billingPeriod BillingPeriod @map("billing_period")
+  description   String?      @db.Text
+  status        ProductStatus @default(DRAFT)
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  @@unique([creatorId, slug])
+}
+
+model DigitalProduct {
+  id          String            @id @default(cuid())
+  creatorId   String            @map("creator_id")
+  creator     Creator           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String?           @db.Text
+  price       Decimal           @db.Decimal(10, 2)
+  type        DigitalProductType
+  status      ProductStatus     @default(DRAFT)
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  @@unique([creatorId, slug])
+}
+
+model AffiliateProgram {
+  id             String        @id @default(cuid())
+  creatorId      String        @map("creator_id")
+  creator        Creator       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  name           String
+  slug           String
+  commissionRate Decimal      @map("commission_rate") @db.Decimal(5, 2)
+  description    String?      @db.Text
+  status         ProductStatus @default(DRAFT)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+  @@unique([creatorId, slug])
+}
+
+model Community {
+  id          String        @id @default(cuid())
+  creatorId   String        @map("creator_id")
+  creator     Creator       @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String?       @db.Text
+  price       Decimal      @db.Decimal(10, 2)
+  platform    String       // e.g. DISCORD, CUSTOM
+  status      ProductStatus @default(DRAFT)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  @@unique([creatorId, slug])
+}

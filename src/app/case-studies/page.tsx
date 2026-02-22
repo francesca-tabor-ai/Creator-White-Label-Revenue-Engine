@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogosMarquee } from "@/components/LogosMarquee";
+import { Footer } from "@/components/Footer";
 
 const caseStudies = [
   {
@@ -152,42 +153,16 @@ export default function CaseStudiesPage() {
             Get the same platform powering Apex, Velocity, Luminary, and
             Monetize Labs.
           </p>
-          <a
-            href="#"
+          <Link
+            href="/contact"
             className="mt-8 inline-block rounded-xl bg-teal-500 px-6 py-3.5 font-semibold text-white transition hover:bg-teal-400"
           >
             Get started free
-          </a>
+          </Link>
         </div>
       </section>
 
-      <footer className="border-t border-slate-800 bg-slate-950 px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl flex flex-wrap items-center justify-between gap-4">
-          <span className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Creator White Label Revenue Engine
-          </span>
-          <div className="flex gap-6">
-            <Link
-              href="/"
-              className="text-sm text-slate-400 hover:text-teal-400"
-            >
-              Home
-            </Link>
-            <Link
-              href="/pricing"
-              className="text-sm text-slate-400 hover:text-teal-400"
-            >
-              Pricing
-            </Link>
-            <Link
-              href="/contact"
-              className="text-sm text-slate-400 hover:text-teal-400"
-            >
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <Footer variant="dark" />
     </main>
   );
 }

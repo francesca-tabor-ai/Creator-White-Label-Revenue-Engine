@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import ChatWidget from "@/components/ChatWidget";
+import { Providers } from "./providers";
+import { ConditionalShell } from "@/components/ConditionalShell";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -23,9 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body className="min-h-screen bg-slate-50 font-sans text-slate-900">
-        <Header />
-        {children}
-        <ChatWidget />
+        <Providers>
+          <ConditionalShell>{children}</ConditionalShell>
+        </Providers>
       </body>
     </html>
   );
