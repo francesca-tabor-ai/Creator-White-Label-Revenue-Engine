@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ConditionalShell } from "@/components/ConditionalShell";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-});
-
 export const metadata: Metadata = {
-  title: "Creator White Label Revenue Engine",
+  title: "Creator Revenue OS",
   description:
-    "The all-in-one monetization platform for agencies and creator economy operators. Your brand. Your creators. One revenue engine.",
+    "Turn your audience into a recurring revenue SaaS business without building a product yourself.",
 };
 
 export default function RootLayout({
@@ -21,8 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={dmSans.variable}>
-      <body className="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="min-h-screen bg-[var(--color-background)] font-sans text-[var(--color-text)]">
         <Providers>
           <ConditionalShell>{children}</ConditionalShell>
         </Providers>
